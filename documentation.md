@@ -216,15 +216,6 @@ npm run dev
 
 ---
 
-## 11. Screenshots
-
-* **Live Project Demo Link**: [Render Web Service URL](https://book-store-nzxy.onrender.com/)
-* **Screenshots Showcase**:
-  ![UI collage of BookVerse](media__1784313810271.png)
-  *Figure 1: UI collage of the BookVerse application showcasing the Landing page, Seller catalog, Add Book form, Seller Orders, and Seller Dashboard.*
-
----
-
 ## 12. Known Issues
 
 * **Network Whitelisting**: If MongoDB Atlas returns a `Connection Refused` error, verify that the IP Access List on Atlas is set to allow connections from anywhere (`0.0.0.0/0`).
@@ -237,3 +228,25 @@ npm run dev
 * **Direct Checkout Payment Gateway**: Integrate Stripe or PayPal API for actual payment transactions.
 * **Seller Inventory Alerts**: Implement automatic email alerts using Nodemailer when listed books reach low stock levels.
 * **Interactive Reviews**: Allow customers to submit star ratings and detailed review comments which recalculate the average rating dynamically.
+
+---
+
+## 11. Screenshots
+
+* **Live Project Demo Link**: [Render Web Service URL](https://book-store-nzxy.onrender.com/)
+* **Screenshots Showcase**:
+  1. **Home Page**:
+     ![1. Guest Home Page](media__1784304688594.png)
+     *Figure 1: UI of the BookVerse landing page display showing branding, search exploration buttons, and guest portal entry badges.*
+  2. **Admin Login Page**:
+     ![2. Admin Login Page](media__1784304710940.png)
+     *Figure 2: Authentication card panel interface for the system administrator login portal.*
+  3. **Seller Dashboard**:
+     ![3. Seller Dashboard](media__1784304891346.png)
+     *Figure 3: Seller summary cards for Items and Total Orders, and the SVG bar chart indicating the seller's metrics.*
+  4. **Seller Products List**:
+     ![4. Seller Products List](media__1784304891353.png)
+     *Figure 4: Seller catalog sheet showing listed items with title, author, genre, price, and cover image.*
+  5. **Seller Orders Management**:
+     ![5. Seller Orders Management](media__1784304931230.png)
+     *Figure 5: Fulfilling orders interface for sellers to trace ordered items, prices, booking dates, and update statuses.*
