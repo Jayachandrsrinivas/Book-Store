@@ -37,11 +37,11 @@ const buildBrainstormingPDF = () => {
   const colorText = '#1A1A1A';
   const colorSub = '#555555';
 
-  // Paths of generated images
+  // Paths of uploaded whiteboard images
   const brainDir = 'C:\\Users\\raman\\.gemini\\antigravity\\brain\\6bd19433-e93c-41ee-8bdc-1c3bcff342c6';
-  const img1 = path.join(brainDir, 'team_collaboration_1784366656882.png');
-  const img2 = path.join(brainDir, 'idea_grouping_1784366681502.png');
-  const img3 = path.join(brainDir, 'idea_prioritization_1784366708684.png');
+  const img1 = path.join(brainDir, 'media__1784367670883.png'); // Step 1 (Landscape)
+  const img2 = path.join(brainDir, 'media__1784367670860.png'); // Step 2 (Landscape)
+  const img3 = path.join(brainDir, 'media__1784367670859.png'); // Step 3 (Portrait)
 
   // Helpers
   const addHeaderTable = () => {
@@ -89,53 +89,56 @@ const buildBrainstormingPDF = () => {
   };
 
   const addCenteredStepHeading = (title) => {
-    doc.moveDown(1.5);
     doc.fillColor(colorPrimary).fontSize(13).font(fontTitle).text(title, { align: 'center' });
     doc.moveDown(0.5);
   };
 
-  const addCenteredStepImage = (filePath, caption) => {
+  const addCenteredStepImage = (filePath, caption, isPortrait = false) => {
     if (fs.existsSync(filePath)) {
       doc.moveDown(0.5);
+      // Center the image box
+      const fitWidth = 440;
+      const fitHeight = isPortrait ? 330 : 250;
       doc.image(filePath, {
-        fit: [440, 240],
-        align: 'center'
+        fit: [fitWidth, fitHeight],
+        align: 'center',
+        valign: 'center'
       });
       doc.moveDown(0.8);
       doc.fillColor(colorSub).fontSize(9.5).font(fontBody).text(caption, { align: 'center' });
-      doc.moveDown(1);
     } else {
       console.warn(`Warning: Image file not found: ${filePath}`);
     }
   };
 
-  // --- Document Compilation ---
+  // --- Page 1: Metadata Table, Title, and Introduction ---
   addHeaderTable();
 
-  // Document Title (Centered)
+  // Document Title
   doc.fontSize(16).font(fontTitle).text('IDEATION PHASE: BRAINSTORM & IDEA PRIORITIZATION', { align: 'center' });
   doc.moveDown(1.2);
 
-  // Brainstorming Intro (Centered)
+  // Brainstorming Intro Paragraphs
   addCenteredParagraph('Brainstorming provides a free and open environment that encourages everyone within a team to participate in the creative thinking process that leads to problem solving. Prioritizing volume over value, out-of-the-box ideas are welcome and built upon, and all participants are encouraged to collaborate, helping each other develop a rich amount of creative solutions.');
   addCenteredParagraph('Use this template in your own brainstorming sessions so your team can unleash their imagination and start shaping concepts even if you\'re not sitting in the same room.');
 
-  // Step 1 (Centered)
+  // --- Page 2: Step 1 (On its own clean page) ---
+  doc.addPage();
   addCenteredStepHeading('Step-1: Team Gathering, Collaboration and Select the Problem Statement');
   addCenteredParagraph('The development team initiated the ideation phase by gathering to analyze the core challenges within the digital bookstore industry. By discussing target demographics, seller limitations, and cart abandonment concerns, the team formulated and finalized the problem statement for the BookStore (BookVerse) application.');
-  addCenteredStepImage(img1, 'Figure 1: Student development team collaborating around a desk to formulate the bookstore problem statement.');
+  addCenteredStepImage(img1, 'Figure 1: Miro team collaboration workspace map used to define the BookStore problem statement.');
 
-  // Step 2 (Centered)
+  // --- Page 3: Step 2 (On its own clean page) ---
   doc.addPage();
   addCenteredStepHeading('Step-2: Brainstorm, Idea Listing and Grouping');
   addCenteredParagraph('During the idea listing phase, team members generated diverse ideas for site capabilities. These concepts were grouped into distinct architectural models: User shopping experience, Seller book inventory control, and Administrative approval and logging monitors.');
-  addCenteredStepImage(img2, 'Figure 2: Idea mapping session showing features categorized into modules on a collaboration board.');
+  addCenteredStepImage(img2, 'Figure 2: Idea brainstorming and grouping whiteboard with virtual sticky notes.');
 
-  // Step 3 (Centered)
+  // --- Page 4: Step 3 (On its own clean page) ---
   doc.addPage();
   addCenteredStepHeading('Step-3: Idea Prioritization');
   addCenteredParagraph('Using a 2x2 Action Priority Matrix (comparing System Impact vs Implementation Effort), the team mapped listed ideas to identify quick wins. Features such as direct checkout, visual dashboard charts, and search filters were prioritized as core MVP components, while payment gateway integrations were scheduled for future releases.');
-  addCenteredStepImage(img3, 'Figure 3: Prioritization matrix evaluating bookstore features by impact and complexity.');
+  addCenteredStepImage(img3, 'Figure 3: 2x2 Importance vs Feasibility matrix for priority task selection.', true);
 
   // Footer and Page Numbers
   const pages = doc.bufferedPageRange();
@@ -147,7 +150,7 @@ const buildBrainstormingPDF = () => {
   }
 
   doc.end();
-  console.log('BrainStorming PDF generated successfully: BrainStorming.pdf');
+  console.log('BrainStorming PDF updated successfully: BrainStorming.pdf');
 };
 
 buildBrainstormingPDF();
