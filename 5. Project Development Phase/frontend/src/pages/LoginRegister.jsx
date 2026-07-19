@@ -61,6 +61,9 @@ const LoginRegister = () => {
         if (role === 'user') {
           // Direct login for user
           setTimeout(() => navigate('/user-home'), 1500);
+        } else if (role === 'admin') {
+          // Direct login for admin
+          setTimeout(() => navigate('/admin-home'), 1500);
         } else {
           // Seller requires approval, so stay on page and prompt them
           setIsLogin(true);

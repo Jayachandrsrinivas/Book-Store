@@ -41,17 +41,23 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Registration action for User and Seller
+  // Registration action for User, Seller, Admin
   const register = async (name, email, password, role) => {
     try {
-      const endpoint = `${API_BASE}/${role === 'user' ? 'users' : 'seller'}/register`;
+      let rolePath = 'seller';
+      if (role === 'user') {
+        rolePath = 'users';
+      } else if (role === 'admin') {
+        rolePath = 'admin';
+      }
+      const endpoint = `${API_BASE}/${rolePath}/register`;
       const response = await axios.post(endpoint, { name, email, password });
       
-      if (role === 'user') {
+      if (role === 'user' || role === 'admin') {
         const userData = {
           token: response.data.token,
-          role: 'user',
-          ...response.data.user
+          role: role,
+          ...(role === 'user' ? response.data.user : response.data.admin)
         };
         setUser(userData);
         localStorage.setItem('bookverse_user', JSON.stringify(userData));
